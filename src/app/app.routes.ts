@@ -17,6 +17,11 @@ export const routes: Routes = [
         loadComponent: () => import('./tesla-configuration-summary/tesla-configuration-summary.component')
     },
     {
+        path: '',
+        redirectTo: RoutingConstants.getTeslaModelSelectorPagePath(),
+        pathMatch: 'full'
+    },
+    {
         path: '**',
         component: PageNotFoundComponent
     },
