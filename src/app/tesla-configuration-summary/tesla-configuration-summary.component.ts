@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './tesla-configuration-summary.component.html',
   styleUrl: './tesla-configuration-summary.component.scss'
 })
-export class TeslaConfigurationSummaryComponent {
+export default class TeslaConfigurationSummaryComponent {
 
 }
