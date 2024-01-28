@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { TeslaModelSelectorComponent } from './tesla-model-selector/tesla-model-selector.component';
 import { RoutingConstants } from './routing/routing-constants';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     {
@@ -14,5 +15,10 @@ export const routes: Routes = [
     {
         path: RoutingConstants.getTelsaConfigurationSummaryPagePath(),
         loadComponent: () => import('./tesla-configuration-summary/tesla-configuration-summary.component')
-    }
+    },
+    {
+        path: '**',
+        component: PageNotFoundComponent
+    },
+
 ];
