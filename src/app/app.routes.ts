@@ -10,5 +10,9 @@ export const routes: Routes = [
     {
         path: RoutingConstants.getTeslaOptionsSelectorPagePath(),
         loadComponent: () => import('./tesla-options-selector/tesla-options-selector.component')
+    },
+    {
+        path: RoutingConstants.getTelsaConfigurationSummaryPagePath(),
+        loadComponent: () => import('./tesla-configuration-summary/tesla-configuration-summary.component')
     }
 ];
