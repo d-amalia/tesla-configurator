@@ -7,7 +7,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-tesla-configuration-steps',
   standalone: true,
-  imports: [NgFor, RouterLink, RouterLinkActive],
+  imports: [
+    NgFor,
+    RouterLink,
+    RouterLinkActive
+  ],
   templateUrl: './tesla-configuration-steps.component.html',
   styleUrl: './tesla-configuration-steps.component.scss'
 })
