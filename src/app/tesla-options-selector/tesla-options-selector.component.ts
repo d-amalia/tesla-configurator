@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './tesla-options-selector.component.html',
   styleUrl: './tesla-options-selector.component.scss'
 })
-export class TeslaOptionsSelectorComponent {
+export default class TeslaOptionsSelectorComponent {
 
 }
