@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { TeslaModel } from '../tesla-model-selector/tesla-model.model';
+import { TeslaModelOptions } from '../tesla-options-selector/tesla-option.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,24 @@ export class TeslaDataService {
     const url = '/models';
 
     return this.httpClient.get<TeslaModel[]>(url);
+  }
+
+  public getTeslaModelOptions(modelCode: string): Observable<TeslaModelOptions> {
+    const teslaModelOptions$ = this.getTeslaModelOptionsByAPI(modelCode);
+
+    const teslaModelOptionsFeedback$ = teslaModelOptions$.pipe(
+      catchError((err) => {
+        console.error('Error getting tesla model options:', err);
+        throw err;
+      })
+    );
+
+    return teslaModelOptionsFeedback$;
+  }
+
+  private getTeslaModelOptionsByAPI(modelCode: string): Observable<TeslaModelOptions> {
+    const url = `/options/${modelCode}`;
+
+    return this.httpClient.get<TeslaModelOptions>(url);
   }
 }

@@ -6,7 +6,7 @@ export interface TeslaModelConfig {
     price: number;
 }
 
-export interface TeslaModelOption {
+export interface TeslaModelOptions {
     configs: TeslaModelConfig[];
     towHitch: boolean;
     yoke: boolean
