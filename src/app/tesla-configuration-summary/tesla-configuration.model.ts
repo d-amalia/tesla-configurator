@@ -21,27 +21,27 @@ export class TeslaConfiguration {
         this.TOW_COST = 1000;
     }
 
-    public setSelectedModel(model: TeslaModel): void {
+    public setModel(model: TeslaModel): void {
         this.model = model;
     }
 
-    public getSelectedModel(): TeslaModel | null {
+    public getModel(): TeslaModel | null {
         return this.model;
     }
 
-    public setSelectedColor(color: TeslaColor): void {
+    public setColor(color: TeslaColor): void {
         this.color = color;
     }
 
-    public getSelectedColor(): TeslaColor | null {
+    public getColor(): TeslaColor | null {
         return this.color;
     }
 
-    public setSelectedConfig(config: TeslaModelConfig): void {
+    public setConfig(config: TeslaModelConfig): void {
         this.config = config;
     }
 
-    public getSelectedConfig(): TeslaModelConfig | null {
+    public getConfig(): TeslaModelConfig | null {
         return this.config;
     }
 
