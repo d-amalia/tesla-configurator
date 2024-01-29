@@ -17,7 +17,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class TeslaConfigurationStepsComponent implements OnInit {
 
-  steps: TeslaConfigurationStep[] = [];
+  public steps: TeslaConfigurationStep[] = [];
 
   constructor(private stepsService: TeslaConfigurationStepsService) {
   }
