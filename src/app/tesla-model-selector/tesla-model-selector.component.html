@@ -1,1 +1,12 @@
-<p>tesla-model-selector works!</p>
+<ng-container *ngIf="teslaModels$ | async as teslaModels; else loading">
+
+    <select id="modelSelect">
+        <option *ngFor="let model of teslaModels" [value]="model.code">{{model.description}}
+        </option>
+    </select>
+
+</ng-container>
+
+<ng-template #loading>
+    Loading...
+</ng-template>
