@@ -8,12 +8,17 @@ export class TeslaConfiguration {
     private includeYoke: boolean;
     private includeTow: boolean;
 
+    private readonly YOKE_COST: number;
+    private readonly TOW_COST: number;
+
     constructor() {
         this.model = null;
         this.color = null;
         this.config = null;
         this.includeYoke = false;
         this.includeTow = false;
+        this.YOKE_COST = 1000;
+        this.TOW_COST = 1000;
     }
 
     public setSelectedModel(model: TeslaModel): void {
@@ -68,11 +73,11 @@ export class TeslaConfiguration {
         }
 
         if (this.includeYoke) {
-            total += 1000;
+            total += this.YOKE_COST;
         }
 
         if (this.includeTow) {
-            total += 1000;
+            total += this.TOW_COST;
         }
 
         return total;
