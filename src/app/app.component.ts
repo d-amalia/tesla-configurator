@@ -7,8 +7,6 @@ import { TeslaConfigurationStepsComponent } from './tesla-configuration-steps/te
   selector: 'app-root',
   standalone: true,
   imports: [
-    AsyncPipe,
-    JsonPipe,
     RouterModule,
     TeslaConfigurationStepsComponent
   ],
