@@ -1,3 +1,6 @@
-<button *ngFor="let step of steps" [id]="'step'+ step.id" [routerLink]="step.routerLink" [routerLinkActive]="'active'">
-    {{step.name}}
-</button>
+<div class="steps-container">
+    <button *ngFor="let step of steps" [id]="'step'+ step.id" [routerLink]="step.routerLink"
+        [routerLinkActive]="'active'" class="step">
+        {{step.name}}
+    </button>
+</div>
