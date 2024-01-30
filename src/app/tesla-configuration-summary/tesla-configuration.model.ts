@@ -71,9 +71,4 @@ export class TeslaConfigurationFormManager {
         colorCodeControl.setValue(colorCode);
     }
 
-    public setConfigIdControlValue(configId: number): void {
-        const configIdControl = this.configIdControl;
-
-        configIdControl.setValue(configId);
-    }
 }
