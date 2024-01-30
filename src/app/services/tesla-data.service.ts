@@ -11,7 +11,7 @@ export class TeslaDataService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getTeslaModels(): Observable<TeslaModel[]> {
+  getTeslaModels(): Observable<TeslaModel[]> {
     const teslaModels$ = this.getTeslaModelsByAPI();
 
     const teslaModelsFeedback$ = teslaModels$.pipe(
@@ -30,7 +30,7 @@ export class TeslaDataService {
     return this.httpClient.get<TeslaModel[]>(url);
   }
 
-  public getTeslaModelOptions(modelCode: string): Observable<TeslaModelOptions> {
+  getTeslaModelOptions(modelCode: string): Observable<TeslaModelOptions> {
     const teslaModelOptions$ = this.getTeslaModelOptionsByAPI(modelCode);
 
     const teslaModelOptionsFeedback$ = teslaModelOptions$.pipe(
