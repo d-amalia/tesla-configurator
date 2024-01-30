@@ -85,6 +85,10 @@ export class TeslaConfigurationFormManager {
         return this.configIdControlValue !== null;
     }
 
+    get colorCodeControlValueChanges(): Observable<string | null> {
+        return this.colorCodeControl.valueChanges;
+    }
+
     setColorCodeControlValue(colorCode: string): void {
         this.colorCodeControl.setValue(colorCode);
     }
