@@ -4,7 +4,7 @@
 
     <label for="modelSelect">Model: </label>
     <select id="modelSelect" [formControl]="configurationFormManager.modelCodeControl">
-        <option [value]="null">Choose...</option>
+        <option [ngValue]="null">Choose...</option>
         <option *ngFor="let model of models" [ngValue]="model.code">{{model.description}}
         </option>
     </select>
