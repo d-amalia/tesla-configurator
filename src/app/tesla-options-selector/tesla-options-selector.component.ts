@@ -21,10 +21,11 @@ import { TeslaConfigurationManagerService } from '../services/tesla-configuratio
 })
 export default class TeslaOptionsSelectorComponent implements OnInit, OnDestroy {
 
-  public dataLoaded: boolean = false;
   public options: TeslaModelOptions | null = null;
-  public configurationFormManager: TeslaConfigurationFormManager;
   public config: TeslaModelConfig | null = null;
+
+  public dataLoaded: boolean = false;
+  public configurationFormManager: TeslaConfigurationFormManager;
 
   private subSink = new Subscription();
 
@@ -35,11 +36,11 @@ export default class TeslaOptionsSelectorComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.initializeModelOptionsData();
+    this.initializeOptionsData();
     this.onConfigSelectionChange();
   }
 
-  private initializeModelOptionsData(): void {
+  private initializeOptionsData(): void {
     const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
     if (selectedModelCode === null) {
       return;
