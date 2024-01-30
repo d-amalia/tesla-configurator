@@ -23,59 +23,65 @@ export class TeslaModelSelectorComponent implements OnInit, OnDestroy {
 
   public dataLoaded: boolean = false;
   public models: TeslaModel[] = [];
-  public modelColors: TeslaColor[] = [];
+  public colors: TeslaColor[] = [];
+  public configurationFormManager: TeslaConfigurationFormManager;
 
-  public configurationFormManager!: TeslaConfigurationFormManager;
   private subSink = new Subscription();
 
   constructor(private dataService: TeslaDataService,
     private configurationManagerService: TeslaConfigurationManagerService
   ) {
+    this.configurationFormManager = this.configurationManagerService.configurationFormManager;
   }
 
   ngOnInit(): void {
-    this.configurationFormManager = this.configurationManagerService.getTeslaConfigurationFormManager();
-    this.initializeTeslaModels();
+    this.initializeModelsData();
 
-    this.onModelCodeChange();
+    this.onModelSelectionChange();
   }
 
-  private initializeTeslaModels(): void {
+  private initializeModelsData(): void {
     const subscription = this.dataService.getTeslaModels().subscribe((models) => {
-      this.onInitializedModels(models);
+      this.onInitializedModelsData(models);
     });
 
     this.subSink.add(subscription);
   }
 
-  private onInitializedModels(models: TeslaModel[]): void {
+  private onInitializedModelsData(models: TeslaModel[]): void {
     this.models = models;
-    this.dataLoaded = true;
 
     const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
-    this.initializeModelColors(selectedModelCode);
+    this.initializeColorsData(selectedModelCode);
+
+    this.dataLoaded = true;
   }
 
-  private onModelCodeChange(): void {
-    const subscription = this.configurationFormManager.modelCodeControlValueChanges.subscribe((modelCode: string | null) => {
-      this.initializeModelColors(modelCode);
-      this.configurationFormManager.setColorCodeControlValue(this.modelColors[0].code)
-    });
-
-    this.subSink.add(subscription);
-  }
-
-  private initializeModelColors(modelCode: string | null): void {
+  private initializeColorsData(modelCode: string | null): void {
     if (modelCode === null) {
       return;
     }
 
-    const foundColors = this.models.find(model => model.code === modelCode);
-    if (foundColors === undefined) {
+    const foundModel = this.models.find(model => model.code === modelCode);
+    if (foundModel === undefined) {
       return;
     }
 
-    this.modelColors = foundColors.colors;
+    this.colors = foundModel.colors;
+  }
+
+  private onModelSelectionChange(): void {
+    const subscription = this.configurationFormManager.modelCodeControlValueChanges.subscribe((modelCode: string | null) => {
+      this.initializeColorsData(modelCode);
+      this.selectFirstColor();
+    });
+
+    this.subSink.add(subscription);
+  }
+
+  private selectFirstColor(): void {
+    const firstColorCode = this.colors[0].code;
+    this.configurationFormManager.setColorCodeControlValue(firstColorCode);
   }
 
   ngOnDestroy(): void {

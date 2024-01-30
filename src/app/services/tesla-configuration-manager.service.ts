@@ -5,13 +5,13 @@ import { TeslaConfigurationFormManager } from '../tesla-configuration-summary/te
   providedIn: 'root'
 })
 export class TeslaConfigurationManagerService {
-  private configurationFormManager: TeslaConfigurationFormManager
+  private _configurationFormManager: TeslaConfigurationFormManager
 
   constructor() {
-    this.configurationFormManager = new TeslaConfigurationFormManager();
+    this._configurationFormManager = new TeslaConfigurationFormManager();
   }
 
-  public getTeslaConfigurationFormManager(): TeslaConfigurationFormManager {
-    return this.configurationFormManager;
+  public get configurationFormManager(): TeslaConfigurationFormManager {
+    return this._configurationFormManager;
   }
 }

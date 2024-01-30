@@ -12,7 +12,7 @@
     <ng-container *ngIf="configurationFormManager.hasModelCodeSelected">
         <label for="colorSelect">Color: </label>
         <select id="colorSelect" [formControl]="configurationFormManager.colorCodeControl">
-            <option *ngFor="let color of modelColors" [value]="color.code">{{color.description}}
+            <option *ngFor="let color of colors" [value]="color.code">{{color.description}}
             </option>
         </select>
     </ng-container>
