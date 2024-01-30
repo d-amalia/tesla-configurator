@@ -16,13 +16,14 @@ import { CurrencyPipe, NgIf } from '@angular/common';
 })
 export default class TeslaConfigurationSummaryComponent implements OnInit, OnDestroy {
 
-  dataLoaded: boolean = false;
   selectedModel: TeslaModel | null = null;
   selectedColor: TeslaColor | null = null;
   selectedConfig: TeslaModelConfig | null = null;
   configurationFormManager: TeslaConfigurationFormManager;
   totalCost: number = 0;
 
+  private readonly YOKE_COST: number = 1000;
+  private readonly TOW_COST: number = 1000;
   private subSink = new Subscription();
 
   constructor(private dataService: TeslaDataService,
@@ -48,6 +49,7 @@ export default class TeslaConfigurationSummaryComponent implements OnInit, OnDes
       self.initializeSelectedModel(models);
       self.initializeSelectedColor();
       self.initializeSelectedConfig(options);
+      self.totalCost = self.calculateTotalCost();
     });
 
     this.subSink.add(subscription);
@@ -75,6 +77,28 @@ export default class TeslaConfigurationSummaryComponent implements OnInit, OnDes
 
     const foundConfig = options.configs.find(config => config.id === selectedConfigId);
     this.selectedConfig = foundConfig ? foundConfig : null;
+  }
+
+  private calculateTotalCost(): number {
+    let total = 0;
+
+    if (this.selectedColor) {
+      total += this.selectedColor.price;
+    }
+
+    if (this.selectedConfig) {
+      total += this.selectedConfig.price;
+    }
+
+    if (this.configurationFormManager.includeTow) {
+      total += this.TOW_COST;
+    }
+
+    if (this.configurationFormManager.includeYoke) {
+      total += this.YOKE_COST;
+    }
+
+    return total;
   }
 
   ngOnDestroy(): void {

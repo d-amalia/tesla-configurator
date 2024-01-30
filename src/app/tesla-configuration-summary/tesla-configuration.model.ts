@@ -73,6 +73,14 @@ export class TeslaConfigurationFormManager {
         return this.colorCodeControl.value;
     }
 
+    get includeTow(): boolean {
+        return this.includeTowControl.value === true;
+    }
+
+    get includeYoke(): boolean {
+        return this.includeYokeControl.value === true;
+    }
+
     setColorCodeControlValue(colorCode: string): void {
         this.colorCodeControl.setValue(colorCode);
     }

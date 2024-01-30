@@ -1,11 +1,39 @@
 <h1>Step 3: Summary</h1>
 <ng-container *ngIf="selectedModel && selectedColor && selectedConfig; else loading">
-    <h2>Your Tesla {{selectedModel.description}} </h2>
-
-    <p>{{selectedConfig.description}} &nbsp; {{selectedConfig.price | currency}} </p>
-    <p>Range: {{selectedConfig.range}} miles - Max speed: {{selectedConfig.speed}}
-    <p>{{selectedColor.description}} &nbsp; {{selectedColor.price | currency}} </p>
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h3>Your Tesla {{selectedModel.description}} </h3>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>{{ selectedConfig.description }}</b>
+                    <br>
+                    <span>Range: {{selectedConfig.range}} miles - Max speed: {{selectedConfig.speed}}</span>
+                </td>
+                <td>{{ selectedConfig.price | currency : 'USD' }}</td>
+            </tr>
+            <tr>
+                <td><b>{{selectedColor.description}}</b></td>
+                <td>{{selectedColor.price | currency : 'USD' }}</td>
+            </tr>
+            <tr *ngIf="configurationFormManager.includeYoke">
+                <td><b>Yoke Steering Wheel Package</b></td>
+                <td>{{ 1000 | currency : 'USD' }}</td>
+            </tr>
+            <tr *ngIf="configurationFormManager.includeTow">
+                <td><strong>Tow Hitch Package </strong></td>
+                <td>{{ 1000 | currency : 'USD' }}</td>
+            </tr>
+            <tr>
+                <td><b>TOTAL COST </b></td>
+                <td>{{ totalCost | currency : "USD" }}</td>
+            </tr>
+        </tbody>
+    </table>
 </ng-container>
 
 <ng-template #loading>
