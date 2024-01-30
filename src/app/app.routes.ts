@@ -3,6 +3,7 @@ import { TeslaModelSelectorComponent } from './tesla-model-selector/tesla-model-
 import { RoutingConstants } from './routing/routing-constants';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { canActivateOptionsSelectionGuard } from './routing/can-activate-options-selection.guard';
+import { canActivateConfigurationSummaryGuard } from './routing/can-activate-configuration-summary.guard';
 
 export const routes: Routes = [
     {
@@ -16,7 +17,8 @@ export const routes: Routes = [
     },
     {
         path: RoutingConstants.getTelsaConfigurationSummaryPagePath(),
-        loadComponent: () => import('./tesla-configuration-summary/tesla-configuration-summary.component')
+        loadComponent: () => import('./tesla-configuration-summary/tesla-configuration-summary.component'),
+        canActivate: [canActivateConfigurationSummaryGuard]
     },
     {
         path: '',

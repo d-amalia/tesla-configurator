@@ -81,6 +81,10 @@ export class TeslaConfigurationFormManager {
         return this.includeYokeControl.value === true;
     }
 
+    get configSelected(): boolean {
+        return this.configIdControlValue !== null;
+    }
+
     setColorCodeControlValue(colorCode: string): void {
         this.colorCodeControl.setValue(colorCode);
     }
