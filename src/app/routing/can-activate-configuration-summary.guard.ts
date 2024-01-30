@@ -6,7 +6,7 @@ export const canActivateConfigurationSummaryGuard: CanActivateFn = () => {
   const configurationManagerService = inject(TeslaConfigurationManagerService);
   const configurationFormManager = configurationManagerService.configurationFormManager;
 
-  if (configurationFormManager.modelCodeSelected && configurationFormManager.configSelected) {
+  if (configurationFormManager.modelCodeSelected && configurationFormManager.configIdSelected) {
     return true
   }
 

@@ -81,7 +81,7 @@ export class TeslaConfigurationFormManager {
         return this.includeYokeControl.value === true;
     }
 
-    get configSelected(): boolean {
+    get configIdSelected(): boolean {
         return this.configIdControlValue !== null;
     }
 
