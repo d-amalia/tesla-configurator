@@ -6,9 +6,6 @@ export const canActivateOptionsSelectionGuard: CanActivateFn = () => {
   const configurationManagerService = inject(TeslaConfigurationManagerService);
   const configurationFormManager = configurationManagerService.configurationFormManager;
 
-  if (configurationFormManager.modelCodeSelected) {
-    return true
-  }
-
-  return false;
+  const canActivate = configurationFormManager.modelCodeSelected;
+  return canActivate;
 };
