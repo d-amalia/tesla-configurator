@@ -9,6 +9,13 @@
         </option>
     </select>
 
+    <div class="checkbox-container">
+        <label for="includeYoke ">Yoke steering wheel? </label>
+        <input type="checkbox" id="includeYoke" [formControl]="configurationFormManager.includeYokeControl"
+            value="false">
+    </div>
+
+
 </ng-container>
 
 <ng-template #loading>
