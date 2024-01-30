@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TeslaColor, TeslaModel } from '../tesla-model-selector/tesla-model.model';
 import { TeslaModelConfig, TeslaModelOptions } from '../tesla-options-selector/tesla-option.model';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { TeslaDataService } from '../services/tesla-data.service';
 import { TeslaConfigurationFormManager } from './tesla-configuration.model';
 import { TeslaConfigurationManagerService } from '../services/tesla-configuration-manager.service';
@@ -16,6 +16,7 @@ import { CurrencyPipe, NgIf } from '@angular/common';
 })
 export default class TeslaConfigurationSummaryComponent implements OnInit, OnDestroy {
 
+  public dataLoaded: boolean = false;
   public selectedModel: TeslaModel | null = null;
   public selectedColor: TeslaColor | null = null;
   public selectedConfig: TeslaModelConfig | null = null;
@@ -32,21 +33,29 @@ export default class TeslaConfigurationSummaryComponent implements OnInit, OnDes
   }
 
   ngOnInit(): void {
-    this.initializeModelsData();
-    this.initializeOptionsData();
+    const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
+    if (selectedModelCode) {
+      this.initializeTeslaConfigurations(selectedModelCode);
+    }
   }
 
-  private initializeModelsData(): void {
-    const subscription = this.dataService.getTeslaModels().subscribe((models) => {
-      this.onInitializedModelsData(models);
+  private initializeTeslaConfigurations(selectedModelCode: string): void {
+    const teslaModels$ = this.dataService.getTeslaModels();
+    const teslaOptions$ = this.dataService.getTeslaModelOptions(selectedModelCode);
+
+    const self = this;
+    const subscription = combineLatest([teslaModels$, teslaOptions$]).subscribe((
+      [teslaModels, teslaOptions]) => {
+      self.initializeSelectedTeslaConfigurations(teslaModels, teslaOptions);
     });
 
     this.subSink.add(subscription);
   }
 
-  private onInitializedModelsData(models: TeslaModel[]): void {
+  private initializeSelectedTeslaConfigurations(models: TeslaModel[], options: TeslaModelOptions): void {
     this.initializeSelectedModel(models);
     this.initializeSelectedColor();
+    this.initializeSelectedConfig(options);
   }
 
   private initializeSelectedModel(models: TeslaModel[]): void {
@@ -75,19 +84,6 @@ export default class TeslaConfigurationSummaryComponent implements OnInit, OnDes
     }
 
     this.selectedColor = foundColor;
-  }
-
-  private initializeOptionsData(): void {
-    const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
-    if (selectedModelCode === null) {
-      return;
-    }
-
-    const subscription = this.dataService.getTeslaModelOptions(selectedModelCode).subscribe((options) => {
-      this.initializeSelectedConfig(options);
-    });
-
-    this.subSink.add(subscription);
   }
 
   private initializeSelectedConfig(options: TeslaModelOptions): void {
