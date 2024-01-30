@@ -65,10 +65,15 @@ export class TeslaConfigurationFormManager {
         return this.modelCodeControl.valueChanges;
     }
 
-    public setColorCodeControlValue(colorCode: string | null): void {
+    public setColorCodeControlValue(colorCode: string): void {
         const colorCodeControl = this.colorCodeControl;
 
         colorCodeControl.setValue(colorCode);
     }
 
+    public setConfigIdControlValue(configId: number): void {
+        const configIdControl = this.configIdControl;
+
+        configIdControl.setValue(configId);
+    }
 }
