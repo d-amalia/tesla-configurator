@@ -16,7 +16,7 @@ export class TeslaDataService {
 
     const teslaModelsFeedback$ = teslaModels$.pipe(
       catchError((err) => {
-        console.error('Error getting tesla models:', err);
+        console.error('Error fetching tesla models:', err);
         throw err;
       })
     );
@@ -35,7 +35,7 @@ export class TeslaDataService {
 
     const teslaModelOptionsFeedback$ = teslaModelOptions$.pipe(
       catchError((err) => {
-        console.error('Error getting tesla model options:', err);
+        console.error('Error fetching tesla model options:', err);
         throw err;
       })
     );

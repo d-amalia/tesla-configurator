@@ -53,7 +53,7 @@ export class TeslaConfigurationFormManager {
         return this.modelCodeControl.value;
     }
 
-    public get hasModelCodeSelected(): boolean {
+    public get modelCodeSelected(): boolean {
         return this.modelCodeControlValue !== null;
     }
 
