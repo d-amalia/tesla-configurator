@@ -1,1 +1,16 @@
-<p>tesla-options-selector works!</p>
+<h1>Step 2: Select your config and options</h1>
+
+<ng-container *ngIf="dataLoaded; else loading">
+
+    <label for="configSelect">Config: </label>
+    <select id="configSelect">
+        <option [value]="null">Choose...</option>
+        <option *ngFor="let config of options.configs" [value]="config.id">{{config.description}}
+        </option>
+    </select>
+
+</ng-container>
+
+<ng-template #loading>
+    Loading...
+</ng-template>
