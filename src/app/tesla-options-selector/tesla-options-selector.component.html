@@ -14,12 +14,12 @@
             currency: 'USD'}}</p>
     </ng-container>
 
-    <div class="checkbox-container">
+    <div *ngIf="options.towHitch" class="checkbox-container">
         <label for="includeTow">Tow hitch? </label>
         <input type="checkbox" id="includeTow" [formControl]="configurationFormManager.includeTowControl" value="false">
     </div>
 
-    <div class="checkbox-container">
+    <div *ngIf="options.yoke" class="checkbox-container">
         <label for="includeYoke ">Yoke steering wheel? </label>
         <input type="checkbox" id="includeYoke" [formControl]="configurationFormManager.includeYokeControl"
             value="false">
