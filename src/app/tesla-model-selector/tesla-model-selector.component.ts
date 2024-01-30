@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TeslaDataService } from '../services/tesla-data.service';
 import { TeslaColor, TeslaModel } from './tesla-model.model';
 import { Subscription } from 'rxjs';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TeslaConfigurationFormManager } from '../tesla-configuration-summary/tesla-configuration.model';
 import { TeslaConfigurationManagerService } from '../services/tesla-configuration-manager.service';
@@ -11,7 +11,6 @@ import { TeslaConfigurationManagerService } from '../services/tesla-configuratio
   selector: 'app-tesla-model-selector',
   standalone: true,
   imports: [
-    AsyncPipe,
     NgIf,
     NgFor,
     ReactiveFormsModule
