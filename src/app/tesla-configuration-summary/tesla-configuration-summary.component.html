@@ -17,7 +17,7 @@
                 <td>{{ selectedConfig.price | currency : 'USD' }}</td>
             </tr>
             <tr>
-                <td><b>{{selectedColor.description}}</b></td>
+                <td><b>{{selectedColor.description}} Color</b></td>
                 <td>{{selectedColor.price | currency : 'USD' }}</td>
             </tr>
             <tr *ngIf="configurationFormManager.includeYoke">
