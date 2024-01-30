@@ -48,4 +48,11 @@ export class TeslaDataService {
 
     return this.httpClient.get<TeslaModelOptions>(url);
   }
+
+  getTeslaImageURL(modelCode: string | null, colorCode: string | null): string | null {
+    if (!modelCode || !colorCode) return null;
+
+    return `https://interstate21.com/tesla-app/images/${modelCode}/${colorCode}.jpg`
+  }
+
 }
