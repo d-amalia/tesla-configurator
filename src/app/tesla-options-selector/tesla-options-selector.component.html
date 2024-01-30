@@ -1,9 +1,9 @@
 <h1>Step 2: Select your config and options</h1>
 
-<ng-container *ngIf="dataLoaded; else loading">
+<ng-container *ngIf="dataLoaded && options; else loading">
 
     <label for="configSelect">Config: </label>
-    <select id="configSelect">
+    <select id="configSelect" [formControl]="configurationFormManager.configIdControl">
         <option [value]="null">Choose...</option>
         <option *ngFor="let config of options.configs" [value]="config.id">{{config.description}}
         </option>
