@@ -21,11 +21,10 @@ import { TeslaConfigurationManagerService } from '../services/tesla-configuratio
 })
 export default class TeslaOptionsSelectorComponent implements OnInit, OnDestroy {
 
-  public options: TeslaModelOptions | null = null;
-  public config: TeslaModelConfig | null = null;
-
-  public dataLoaded: boolean = false;
-  public configurationFormManager: TeslaConfigurationFormManager;
+  dataLoaded: boolean = false;
+  options: TeslaModelOptions | null = null;
+  selectedConfig: TeslaModelConfig | null = null;
+  configurationFormManager: TeslaConfigurationFormManager;
 
   private subSink = new Subscription();
 
@@ -36,52 +35,40 @@ export default class TeslaOptionsSelectorComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.initializeOptionsData();
-    this.onConfigSelectionChange();
+    this.fetchOptionsData();
+    this.subscribeToConfigSelectionChanges();
   }
 
-  private initializeOptionsData(): void {
+  private fetchOptionsData(): void {
     const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
-    if (selectedModelCode === null) {
-      return;
-    }
+    if (!selectedModelCode) return;
 
     const subscription = this.dataService.getTeslaModelOptions(selectedModelCode).subscribe((options) => {
-      this.onInitializedModelOptionsData(options);
+      this.options = options;
+      this.setSelectedConfigData();
+      this.dataLoaded = true;
     });
 
     this.subSink.add(subscription);
   }
 
-  private onInitializedModelOptionsData(options: TeslaModelOptions): void {
-    this.options = options;
-
+  private setSelectedConfigData(): void {
     const selectedConfigId = this.configurationFormManager.configIdControlValue;
-    this.initializeConfig(selectedConfigId);
+    if (!selectedConfigId || !this.options) {
+      this.selectedConfig = null;
+      return;
+    }
 
-    this.dataLoaded = true;
+    const foundConfig = this.options.configs.find(config => config.id == selectedConfigId);
+    this.selectedConfig = foundConfig ? foundConfig : null;
   }
 
-  private onConfigSelectionChange(): void {
-    const subscription = this.configurationFormManager.configIdControlValueChanges.subscribe((configId: number | null) => {
-      this.initializeConfig(configId);
+  private subscribeToConfigSelectionChanges(): void {
+    const subscription = this.configurationFormManager.configIdControlValueChanges.subscribe(() => {
+      this.setSelectedConfigData();
     });
 
     this.subSink.add(subscription);
-  }
-
-  private initializeConfig(configId: number | null): void {
-    if (configId === null || this.options === null) {
-      this.config = null;
-      return;
-    }
-
-    const foundConfig = this.options.configs.find(config => config.id == configId);
-    if (foundConfig === undefined) {
-      return;
-    }
-
-    this.config = foundConfig;
   }
 
   ngOnDestroy(): void {
