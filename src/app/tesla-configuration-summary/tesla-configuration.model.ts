@@ -1,85 +1,74 @@
-import { TeslaColor, TeslaModel } from "../tesla-model-selector/tesla-model.model";
-import { TeslaModelConfig } from "../tesla-options-selector/tesla-option.model";
+import { Observable } from "rxjs";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class TeslaConfiguration {
-    private model: TeslaModel | null;
-    private color: TeslaColor | null;
-    private config: TeslaModelConfig | null;
-    private includeYoke: boolean;
-    private includeTow: boolean;
-
-    private readonly YOKE_COST: number;
-    private readonly TOW_COST: number;
+    public modelCode: FormControl<string | null>;
+    public colorCode: FormControl<string | null>;
+    public configId: FormControl<number | null>;
+    public includeYoke: FormControl<boolean>;
+    public includeTow: FormControl<boolean>;
 
     constructor() {
-        this.model = null;
-        this.color = null;
-        this.config = null;
-        this.includeYoke = false;
-        this.includeTow = false;
-        this.YOKE_COST = 1000;
-        this.TOW_COST = 1000;
+        this.modelCode = new FormControl<string | null>(null, { validators: Validators.required });
+        this.colorCode = new FormControl<string | null>(null, { validators: Validators.required });
+        this.configId = new FormControl<number | null>(null, { validators: Validators.required });
+        this.includeYoke = new FormControl<boolean>(false, { nonNullable: true });
+        this.includeTow = new FormControl<boolean>(false, { nonNullable: true });
+    }
+}
+
+export class TeslaConfigurationFormManager {
+    private _form: FormGroup<TeslaConfiguration>;
+
+    public constructor() {
+        const initialTeslaConfiguration = new TeslaConfiguration();
+        this._form = new FormGroup<TeslaConfiguration>(initialTeslaConfiguration);
     }
 
-    public setModel(model: TeslaModel): void {
-        this.model = model;
+    public get form(): FormGroup<TeslaConfiguration> {
+        return this._form;
     }
 
-    public getModel(): TeslaModel | null {
-        return this.model;
+    public get modelCodeControl(): FormControl<string | null> {
+        return this.form.controls.modelCode;
     }
 
-    public setColor(color: TeslaColor): void {
-        this.color = color;
+    public get colorCodeControl(): FormControl<string | null> {
+        return this.form.controls.colorCode;
     }
 
-    public getColor(): TeslaColor | null {
-        return this.color;
+    public get configIdControl(): FormControl<number | null> {
+        return this.form.controls.configId;
     }
 
-    public setConfig(config: TeslaModelConfig): void {
-        this.config = config;
+    public get includeYokeControl(): FormControl<boolean> {
+        return this.form.controls.includeYoke;
     }
 
-    public getConfig(): TeslaModelConfig | null {
-        return this.config;
+    public get includeTowControl(): FormControl<boolean> {
+        return this.form.controls.includeTow;
     }
 
-    public setIncludeYoke(include: boolean): void {
-        this.includeYoke = include;
+    public get modelCodeControlValue(): string | null {
+        const modelCodeControl = this.modelCodeControl;
+
+        return modelCodeControl.value;
     }
 
-    public getIncludeYoke(): boolean {
-        return this.includeYoke;
+    public get hasModelCodeSelected(): boolean {
+        const modelCodeControlValue = this.modelCodeControlValue;
+
+        return modelCodeControlValue !== null;
     }
 
-    public setIncludeTow(include: boolean): void {
-        this.includeTow = include;
+    public get modelCodeControlValueChanges(): Observable<string | null> {
+        return this.modelCodeControl.valueChanges;
     }
 
-    public getIncludeTow(): boolean {
-        return this.includeTow;
+    public setColorCodeControlValue(colorCode: string | null): void {
+        const colorCodeControl = this.colorCodeControl;
+
+        colorCodeControl.setValue(colorCode);
     }
 
-    public calculateTotalCost(): number {
-        let total = 0;
-
-        if (this.color) {
-            total += this.color.price;
-        }
-
-        if (this.config) {
-            total += this.config.price;
-        }
-
-        if (this.includeYoke) {
-            total += this.YOKE_COST;
-        }
-
-        if (this.includeTow) {
-            total += this.TOW_COST;
-        }
-
-        return total;
-    }
 }
