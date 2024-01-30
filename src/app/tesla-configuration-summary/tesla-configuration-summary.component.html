@@ -1,1 +1,13 @@
-<p>tesla-configuration-summary works!</p>
+<h1>Step 3: Summary</h1>
+<ng-container *ngIf="selectedModel && selectedColor && selectedConfig; else loading">
+    <h2>Your Tesla {{selectedModel.description}} </h2>
+
+    <p>{{selectedConfig.description}} &nbsp; {{selectedConfig.price | currency}} </p>
+    <p>Range: {{selectedConfig.range}} miles - Max speed: {{selectedConfig.speed}}
+    <p>{{selectedColor.description}} &nbsp; {{selectedColor.price | currency}} </p>
+
+</ng-container>
+
+<ng-template #loading>
+    Loading...
+</ng-template>

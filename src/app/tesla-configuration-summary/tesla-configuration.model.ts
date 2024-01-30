@@ -76,4 +76,8 @@ export class TeslaConfigurationFormManager {
     public resetConfigIdControl(): void {
         return this.configIdControl.reset();
     }
+
+    public get colorCodeControlValue(): string | null {
+        return this.colorCodeControl.value;
+    }
 }
