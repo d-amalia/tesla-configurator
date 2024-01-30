@@ -50,15 +50,11 @@ export class TeslaConfigurationFormManager {
     }
 
     public get modelCodeControlValue(): string | null {
-        const modelCodeControl = this.modelCodeControl;
-
-        return modelCodeControl.value;
+        return this.modelCodeControl.value;
     }
 
     public get hasModelCodeSelected(): boolean {
-        const modelCodeControlValue = this.modelCodeControlValue;
-
-        return modelCodeControlValue !== null;
+        return this.modelCodeControlValue !== null;
     }
 
     public get modelCodeControlValueChanges(): Observable<string | null> {
@@ -66,9 +62,10 @@ export class TeslaConfigurationFormManager {
     }
 
     public setColorCodeControlValue(colorCode: string): void {
-        const colorCodeControl = this.colorCodeControl;
-
-        colorCodeControl.setValue(colorCode);
+        this.colorCodeControl.setValue(colorCode);
     }
 
+    public get configIdControlValueChanges(): Observable<number | null> {
+        return this.configIdControl.valueChanges;
+    }
 }
