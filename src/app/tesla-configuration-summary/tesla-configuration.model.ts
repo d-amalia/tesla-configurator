@@ -96,4 +96,12 @@ export class TeslaConfigurationFormManager {
     resetConfigIdControl(): void {
         return this.configIdControl.reset();
     }
+
+    resetIncludeYokeControl(): void {
+        return this.includeYokeControl.reset();
+    }
+
+    resetIncludeTowControl(): void {
+        return this.includeTowControl.reset();
+    }
 }

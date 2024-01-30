@@ -75,6 +75,8 @@ export class TeslaModelSelectorComponent implements OnInit, OnDestroy {
 
   private clearConfig(): void {
     this.configurationFormManager.resetConfigIdControl();
+    this.configurationFormManager.resetIncludeYokeControl();
+    this.configurationFormManager.resetIncludeTowControl();
   }
 
   ngOnDestroy(): void {
