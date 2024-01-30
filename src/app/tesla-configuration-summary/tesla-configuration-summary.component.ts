@@ -16,13 +16,12 @@ import { CurrencyPipe, NgIf } from '@angular/common';
 })
 export default class TeslaConfigurationSummaryComponent implements OnInit, OnDestroy {
 
-  public dataLoaded: boolean = false;
-  public selectedModel: TeslaModel | null = null;
-  public selectedColor: TeslaColor | null = null;
-  public selectedConfig: TeslaModelConfig | null = null;
-
-  public configurationFormManager: TeslaConfigurationFormManager;
-  public totalCost: number = 0;
+  dataLoaded: boolean = false;
+  selectedModel: TeslaModel | null = null;
+  selectedColor: TeslaColor | null = null;
+  selectedConfig: TeslaModelConfig | null = null;
+  configurationFormManager: TeslaConfigurationFormManager;
+  totalCost: number = 0;
 
   private subSink = new Subscription();
 
@@ -33,71 +32,49 @@ export default class TeslaConfigurationSummaryComponent implements OnInit, OnDes
   }
 
   ngOnInit(): void {
-    const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
-    if (selectedModelCode) {
-      this.initializeTeslaConfigurations(selectedModelCode);
-    }
+    this.fetchConfigurationsData();
   }
 
-  private initializeTeslaConfigurations(selectedModelCode: string): void {
-    const teslaModels$ = this.dataService.getTeslaModels();
-    const teslaOptions$ = this.dataService.getTeslaModelOptions(selectedModelCode);
+  private fetchConfigurationsData(): void {
+    const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
+    if (!selectedModelCode) return;
+
+    const models$ = this.dataService.getTeslaModels();
+    const options$ = this.dataService.getTeslaModelOptions(selectedModelCode);
 
     const self = this;
-    const subscription = combineLatest([teslaModels$, teslaOptions$]).subscribe((
-      [teslaModels, teslaOptions]) => {
-      self.initializeSelectedTeslaConfigurations(teslaModels, teslaOptions);
+    const subscription = combineLatest([models$, options$]).subscribe((
+      [models, options]) => {
+      self.initializeSelectedModel(models);
+      self.initializeSelectedColor();
+      self.initializeSelectedConfig(options);
     });
 
     this.subSink.add(subscription);
   }
 
-  private initializeSelectedTeslaConfigurations(models: TeslaModel[], options: TeslaModelOptions): void {
-    this.initializeSelectedModel(models);
-    this.initializeSelectedColor();
-    this.initializeSelectedConfig(options);
-  }
-
   private initializeSelectedModel(models: TeslaModel[]): void {
     const selectedModelCode = this.configurationFormManager.modelCodeControlValue;
-    if (selectedModelCode === null) {
-      return;
-    }
+    if (!selectedModelCode) return;
 
     const foundModel = models.find(model => model.code === selectedModelCode);
-    if (foundModel === undefined) {
-      return;
-    }
-
-    this.selectedModel = foundModel;
+    this.selectedModel = foundModel ? foundModel : null;
   }
 
   private initializeSelectedColor(): void {
     const selectedColorCode = this.configurationFormManager.colorCodeControlValue;
-    if (selectedColorCode === null || this.selectedModel === null) {
-      return;
-    }
+    if (!selectedColorCode || !this.selectedModel) return;
 
     const foundColor = this.selectedModel.colors.find(color => color.code === selectedColorCode);
-    if (foundColor === undefined) {
-      return;
-    }
-
-    this.selectedColor = foundColor;
+    this.selectedColor = foundColor ? foundColor : null;
   }
 
   private initializeSelectedConfig(options: TeslaModelOptions): void {
     const selectedConfigId = this.configurationFormManager.configIdControlValue;
-    if (selectedConfigId === null) {
-      return;
-    }
+    if (!selectedConfigId) return;
 
     const foundConfig = options.configs.find(config => config.id === selectedConfigId);
-    if (foundConfig === undefined) {
-      return;
-    }
-
-    this.selectedConfig = foundConfig;
+    this.selectedConfig = foundConfig ? foundConfig : null;
   }
 
   ngOnDestroy(): void {
