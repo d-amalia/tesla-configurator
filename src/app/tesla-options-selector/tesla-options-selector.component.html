@@ -4,10 +4,14 @@
 
     <label for="configSelect">Config: </label>
     <select id="configSelect" [formControl]="configurationFormManager.configIdControl">
-        <option [value]="null">Choose...</option>
-        <option *ngFor="let config of options.configs" [value]="config.id">{{config.description}}
+        <option [ngValue]="null">Choose...</option>
+        <option *ngFor="let config of options.configs" [ngValue]="config.id">{{config.description}}
         </option>
     </select>
+
+    <ng-container *ngIf="config">
+        <p>Range: {{config.range}} miles - Max speed: {{config.speed}} - Cost: {{config.price | currency}}</p>
+    </ng-container>
 
     <div class="checkbox-container">
         <label for="includeTow">Tow hitch? </label>

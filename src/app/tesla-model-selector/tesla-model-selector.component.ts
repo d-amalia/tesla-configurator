@@ -74,6 +74,7 @@ export class TeslaModelSelectorComponent implements OnInit, OnDestroy {
     const subscription = this.configurationFormManager.modelCodeControlValueChanges.subscribe((modelCode: string | null) => {
       this.initializeColorsData(modelCode);
       this.selectFirstColor();
+      this.resetConfig()
     });
 
     this.subSink.add(subscription);
@@ -82,6 +83,10 @@ export class TeslaModelSelectorComponent implements OnInit, OnDestroy {
   private selectFirstColor(): void {
     const firstColorCode = this.colors[0].code;
     this.configurationFormManager.setColorCodeControlValue(firstColorCode);
+  }
+
+  private resetConfig(): void {
+    this.configurationFormManager.resetConfigIdControl();
   }
 
   ngOnDestroy(): void {

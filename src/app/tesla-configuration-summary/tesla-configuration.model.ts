@@ -68,4 +68,12 @@ export class TeslaConfigurationFormManager {
     public get configIdControlValueChanges(): Observable<number | null> {
         return this.configIdControl.valueChanges;
     }
+
+    public get configIdControlValue(): number | null {
+        return this.configIdControl.value;
+    }
+
+    public resetConfigIdControl(): void {
+        return this.configIdControl.reset();
+    }
 }
