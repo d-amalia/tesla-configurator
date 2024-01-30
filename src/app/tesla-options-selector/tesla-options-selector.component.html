@@ -10,11 +10,15 @@
     </select>
 
     <div class="checkbox-container">
+        <label for="includeTow">Tow hitch? </label>
+        <input type="checkbox" id="includeTow" [formControl]="configurationFormManager.includeTowControl" value="false">
+    </div>
+
+    <div class="checkbox-container">
         <label for="includeYoke ">Yoke steering wheel? </label>
         <input type="checkbox" id="includeYoke" [formControl]="configurationFormManager.includeYokeControl"
             value="false">
     </div>
-
 
 </ng-container>
 
